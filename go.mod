@@ -3,8 +3,10 @@ module marketplace
 go 1.18
 
 require (
+	github.com/jmoiron/sqlx v1.3.5
 	github.com/joho/godotenv v1.4.0
 	github.com/lib/pq v1.10.5
+	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/viper v1.11.0
 )
 

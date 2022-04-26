@@ -5,7 +5,7 @@ package entity
  * One user can have many orders
  */
 type Order struct {
-	ID      int    `json:"id"     db:"id"`
+	ID      int    `json:"-"     db:"id"`
 	UserId  int    `json:"user_id" db:"user_id"`
 	Email   string `json:"email" db:"email"`
 	Name    string `json:"name" db:"name"`
