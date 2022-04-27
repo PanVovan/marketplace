@@ -4,11 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Routes struct {
-	Product
-	Category
-	Brand
-}
+type Routes struct{}
 
 //TODO: init routes
 func (r *Routes) InitRoutes() *gin.Engine {

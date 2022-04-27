@@ -4,8 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Category struct {
-}
+type Category struct{}
 
 func (c *Category) GetAll(context *gin.Context) {
 

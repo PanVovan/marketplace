@@ -4,8 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type User struct {
-}
+type User struct{}
 
 func (u *User) SignUp(context *gin.Context) {
 

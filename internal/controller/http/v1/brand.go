@@ -4,8 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Brand struct {
-}
+type Brand struct{}
 
 func (b *Brand) GetAll(context *gin.Context) {
 
