@@ -1,8 +1,12 @@
 package main
 
 import (
+	"context"
+	"marketplace/internal/httpserver"
 	"marketplace/pkg/postgres"
 	"os"
+	"os/signal"
+	"syscall"
 
 	_ "github.com/joho/godotenv"
 	_ "github.com/lib/pq"
@@ -28,6 +32,26 @@ func main() {
 
 	if err != nil {
 		logrus.Fatalf("failed to initialize db: %s", err.Error())
+	}
+
+	srv := new(httpserver.Server)
+
+	go func() {
+		// if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+		// 	logrus.Fatalf("error occured while running http server: %s", err.Error())
+		// }
+	}()
+
+	logrus.Print("Server started")
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	logrus.Print("Server Shutting Down")
+
+	if err := srv.Shutdown(context.Background()); err != nil {
+		logrus.Errorf("error occured on server shutting down: %s", err.Error())
 	}
 
 	defer func() {

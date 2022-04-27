@@ -1,9 +1,7 @@
 package entity
 
-/*
- * Order model, DB table: "orders"
- * One user can have many orders
- */
+// Order model, DB table: "orders"
+// One user can have many orders
 type Order struct {
 	ID      int    `json:"-"     db:"id"`
 	UserId  int    `json:"user_id" db:"user_id"`
@@ -16,10 +14,9 @@ type Order struct {
 	Comment string `json:"comment" db:"comment"`
 }
 
-/*
- * Order item model, DB table: "items"
- * One order can have many items
- */
+// Order item model, DB table: "items"
+// One order can have many items
+
 type OrderItem struct {
 	ID       int    `json:"-"     db:"id"`
 	OrderID  int    `json:"-"     db:"order_id"`

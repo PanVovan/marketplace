@@ -1,8 +1,6 @@
 package entity
 
-/*
- * User model, DB table: "users"
- */
+// User model, DB table: "users"
 type User struct {
 	ID       int    `json:"-"     db:"id"`
 	Email    string `json:"email" db:"email"`
