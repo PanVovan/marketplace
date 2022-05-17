@@ -1,11 +1,13 @@
 package entity
 
+import "github.com/google/uuid"
+
 type Basket struct {
-	ID int `json:"id" db:"id"`
+	ID uuid.UUID `json:"id" db:"id"`
 }
 
 type BasketProduct struct {
-	BasketID  int `json:"basket_id" db:"basket_id"`
-	ProductID int `json:"product_id" db:"product_id"`
-	Quantity  int `json:"quantity" db:"quantity"`
+	BasketID  uuid.UUID `json:"basket_id" db:"basket_id"`
+	ProductID uuid.UUID `json:"product_id" db:"product_id"`
+	Quantity  int       `json:"quantity" db:"quantity"`
 }

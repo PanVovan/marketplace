@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"marketplace/internal/httpserver"
+	"marketplace/pkg/httpserver"
 	"marketplace/pkg/postgres"
 	"os"
 	"os/signal"
@@ -37,9 +37,9 @@ func main() {
 	srv := new(httpserver.Server)
 
 	go func() {
-		// if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+		 if err := srv.Run(viper.GetString("port"), routes.InitRoutes()); err != nil {
 		// 	logrus.Fatalf("error occured while running http server: %s", err.Error())
-		// }
+		 }
 	}()
 
 	logrus.Print("Server started")
