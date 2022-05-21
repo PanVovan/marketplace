@@ -2,7 +2,7 @@
     "version": "1",
     "packages": [
         {
-            "path": "./internal/user/infrastructure/sqlc",
+            "path": "./internal/user/infrastructure/database/sqlc",
             "engine": "postgresql",
             "queries": [
                 "sql/query/user.sql"               
@@ -13,7 +13,7 @@
             "emit_interface": false
         },
         {
-            "path": "./internal/seller/infrastructure/sqlc",
+            "path": "./internal/seller/infrastructure/database/sqlc",
             "engine": "postgresql",
             "queries": [
                 "sql/query/seller.sql"               
@@ -24,7 +24,7 @@
             "emit_interface": false
         },
         {
-            "path": "./internal/order/infrastructure/sqlc",
+            "path": "./internal/order/infrastructure/database/sqlc",
             "engine": "postgresql",
             "queries": [
                 "sql/query/order.sql" ,              
@@ -39,7 +39,7 @@
             "emit_interface": false
         },
         {
-            "path": "./internal/basket/infrastructure/sqlc",
+            "path": "./internal/basket/infrastructure/database/sqlc",
             "engine": "postgresql",
             "queries": [
                 "sql/query/basket.sql" ,              
@@ -54,7 +54,7 @@
             "emit_interface": false
         },
         {
-            "path": "./internal/brand/infrastructure/sqlc",
+            "path": "./internal/brand/infrastructure/database/sqlc",
             "engine": "postgresql",
             "queries": [
                 "sql/query/brand.sql"              
@@ -67,7 +67,7 @@
             "emit_interface": false
         },
         {
-            "path": "./internal/category/infrastructure/sqlc",
+            "path": "./internal/category/infrastructure/database/sqlc",
             "engine": "postgresql",
             "queries": [
                 "sql/query/category.sql"              
@@ -80,7 +80,7 @@
             "emit_interface": false
         },
         {
-            "path": "./internal/rating/infrastructure/sqlc",
+            "path": "./internal/rating/infrastructure/database/sqlc",
             "engine": "postgresql",
             "queries": [
                 "sql/query/rating.sql"              
@@ -93,7 +93,7 @@
             "emit_interface": false
         },
         {
-            "path": "./internal/product/infrastructure/sqlc",
+            "path": "./internal/product/infrastructure/database/sqlc",
             "engine": "postgresql",
             "queries": [
                 "sql/query/product.sql",              
@@ -116,6 +116,10 @@
         {
             "go_type": "float64",
             "db_type": "pg_catalog.numeric"
+        },
+        {
+            "go_type": "float64",
+            "column": "products.rating"
         }
     ]
 }
