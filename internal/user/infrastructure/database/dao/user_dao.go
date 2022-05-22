@@ -62,18 +62,18 @@ func (u *UserDao) UpdateUser(ctx context.Context, userId uuid.UUID, arg UpdateUs
 	return err
 }
 
-const getSellerInfoByID = `
+const getUserInfoByID = `
 SELECT id, name FROM "users" as "user" WHERE "user"."id" = $1
 `
 
-func (q *UserDao) GetSellerInfoByID(ctx context.Context, id uuid.UUID) (sqlc.UserInfo, error) {
-	row := q.db.QueryRowContext(ctx, getSellerInfoByID, id)
+func (q *UserDao) GetUserInfoByID(ctx context.Context, id uuid.UUID) (sqlc.UserInfo, error) {
+	row := q.db.QueryRowContext(ctx, getUserInfoByID, id)
 	var i sqlc.UserInfo
 	err := row.Scan(&i.ID, &i.Name)
 	return i, err
 }
 
-const getSellersInfo = `
+const getUsersInfo = `
 SELECT id, name FROM "users" as "user" LIMIT $1 OFFSET $2
 `
 
@@ -82,8 +82,8 @@ type GetUsersInfoParams struct {
 	Offset int32 `db:"offset"`
 }
 
-func (q *UserDao) GetSellersInfo(ctx context.Context, arg GetUsersInfoParams) ([]sqlc.UserInfo, error) {
-	rows, err := q.db.QueryContext(ctx, getSellersInfo, arg.Limit, arg.Offset)
+func (q *UserDao) GetUsersInfo(ctx context.Context, arg GetUsersInfoParams) ([]sqlc.UserInfo, error) {
+	rows, err := q.db.QueryContext(ctx, getUsersInfo, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}

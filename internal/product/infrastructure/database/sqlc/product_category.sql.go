@@ -40,7 +40,7 @@ func (q *Queries) DeleteProductCategory(ctx context.Context, arg DeleteProductCa
 }
 
 const getProductsCategories = `-- name: GetProductsCategories :many
-SELECT products_id, categories_id FROM "products_categories" AS "products_categories" LIMIT $1 OFFSET $2
+SELECT products_id, categories_id FROM products_categories AS products_categories LIMIT $1 OFFSET $2
 `
 
 type GetProductsCategoriesParams struct {
@@ -72,7 +72,7 @@ func (q *Queries) GetProductsCategories(ctx context.Context, arg GetProductsCate
 }
 
 const getProductsCategoriesByCategoryID = `-- name: GetProductsCategoriesByCategoryID :many
-SELECT products_id, categories_id FROM "products_categories" AS "products_categories" WHERE categories_id = $1 LIMIT $2 OFFSET $3
+SELECT products_id, categories_id FROM products_categories AS products_categories WHERE categories_id = $1 LIMIT $2 OFFSET $3
 `
 
 type GetProductsCategoriesByCategoryIDParams struct {
@@ -105,7 +105,7 @@ func (q *Queries) GetProductsCategoriesByCategoryID(ctx context.Context, arg Get
 }
 
 const getProductsCategoriesByProductID = `-- name: GetProductsCategoriesByProductID :many
-SELECT products_id, categories_id FROM "products_categories" AS "products_categories" WHERE products_id = $1 LIMIT $2 OFFSET $3
+SELECT products_id, categories_id FROM products_categories AS products_categories WHERE products_id = $1 LIMIT $2 OFFSET $3
 `
 
 type GetProductsCategoriesByProductIDParams struct {

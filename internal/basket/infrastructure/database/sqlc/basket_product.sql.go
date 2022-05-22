@@ -12,7 +12,7 @@ import (
 )
 
 const createBasketProduct = `-- name: CreateBasketProduct :one
-INSERT INTO "basket_products"(id, basket_id, product_id, quantity) VALUES(uuid_generate_v4(), $1, $2, $3) RETURNING id
+INSERT INTO basket_products(id, basket_id, product_id, quantity) VALUES(uuid_generate_v4(), $1, $2, $3) RETURNING id
 `
 
 type CreateBasketProductParams struct {
@@ -56,7 +56,7 @@ func (q *Queries) DeleteBasketProductByProductID(ctx context.Context, productID 
 }
 
 const getBasketProductByID = `-- name: GetBasketProductByID :one
-SELECT id, basket_id, product_id, quantity FROM "basket_products" WHERE id = $1
+SELECT id, basket_id, product_id, quantity FROM basket_products WHERE id = $1
 `
 
 func (q *Queries) GetBasketProductByID(ctx context.Context, id uuid.UUID) (BasketProduct, error) {
@@ -72,7 +72,7 @@ func (q *Queries) GetBasketProductByID(ctx context.Context, id uuid.UUID) (Baske
 }
 
 const getBasketProductByProductID = `-- name: GetBasketProductByProductID :one
-SELECT id, basket_id, product_id, quantity FROM "basket_products" WHERE product_id = $1
+SELECT id, basket_id, product_id, quantity FROM basket_products WHERE product_id = $1
 `
 
 func (q *Queries) GetBasketProductByProductID(ctx context.Context, productID uuid.UUID) (BasketProduct, error) {
@@ -88,7 +88,7 @@ func (q *Queries) GetBasketProductByProductID(ctx context.Context, productID uui
 }
 
 const getBasketProducts = `-- name: GetBasketProducts :many
-SELECT id, basket_id, product_id, quantity FROM "basket_products" LIMIT $1 OFFSET $2
+SELECT id, basket_id, product_id, quantity FROM basket_products LIMIT $1 OFFSET $2
 `
 
 type GetBasketProductsParams struct {
@@ -125,7 +125,7 @@ func (q *Queries) GetBasketProducts(ctx context.Context, arg GetBasketProductsPa
 }
 
 const getBasketProductsByBasketID = `-- name: GetBasketProductsByBasketID :many
- SELECT id, basket_id, product_id, quantity FROM "basket_products" WHERE basket_id = $1 LIMIT $2 OFFSET $3
+ SELECT id, basket_id, product_id, quantity FROM basket_products WHERE basket_id = $1 LIMIT $2 OFFSET $3
 `
 
 type GetBasketProductsByBasketIDParams struct {

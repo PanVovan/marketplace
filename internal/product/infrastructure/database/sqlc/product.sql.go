@@ -40,7 +40,7 @@ func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (u
 }
 
 const deleteProduct = `-- name: DeleteProduct :exec
-DELETE FROM products WHERE "products"."id" = $1
+DELETE FROM products WHERE products.id = $1
 `
 
 func (q *Queries) DeleteProduct(ctx context.Context, id uuid.UUID) error {
@@ -57,8 +57,8 @@ SELECT
 	brand_id,
 	seller_id,
 	amount
-FROM "products" AS "product" 
-	WHERE "product"."id" = $1
+FROM products AS product 
+	WHERE product.id = $1
 `
 
 func (q *Queries) GetProductByID(ctx context.Context, id uuid.UUID) (Product, error) {

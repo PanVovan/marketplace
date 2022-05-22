@@ -9,7 +9,7 @@ SELECT * FROM users WHERE id = $1;
 SELECT * FROM users WHERE email = $1;
 
 -- name: GetUsers :many
-SELECT * FROM users;
+SELECT * FROM users LIMIT $1 OFFSET $2;
 
 -- name: DeleteUser :exec
 DELETE FROM users WHERE id = $1;

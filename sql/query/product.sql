@@ -12,11 +12,11 @@ SELECT
 	brand_id,
 	seller_id,
 	amount
-FROM "products" AS "product" 
-	WHERE "product"."id" = $1;
+FROM products AS product 
+	WHERE product.id = $1;
 
 -- name: DeleteProduct :exec
-DELETE FROM products WHERE "products"."id" = $1;
+DELETE FROM products WHERE products.id = $1;
 
 
 -- -- name: GetProducts :many

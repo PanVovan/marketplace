@@ -23,7 +23,7 @@ func (q *Queries) CreateBrand(ctx context.Context, name string) (uuid.UUID, erro
 }
 
 const deleteBrand = `-- name: DeleteBrand :exec
-DELETE FROM brands WHERE "brands"."id" = $1
+DELETE FROM brands WHERE brands.id = $1
 `
 
 func (q *Queries) DeleteBrand(ctx context.Context, id uuid.UUID) error {
@@ -32,7 +32,7 @@ func (q *Queries) DeleteBrand(ctx context.Context, id uuid.UUID) error {
 }
 
 const getBrandById = `-- name: GetBrandById :one
-SELECT id, name FROM "brands" as "brand" WHERE "brand"."id" = $1
+SELECT id, name FROM brands WHERE id = $1
 `
 
 func (q *Queries) GetBrandById(ctx context.Context, id uuid.UUID) (Brand, error) {
@@ -43,7 +43,7 @@ func (q *Queries) GetBrandById(ctx context.Context, id uuid.UUID) (Brand, error)
 }
 
 const getBrands = `-- name: GetBrands :many
-SELECT id, name FROM "brands" as "brand" LIMIT $1 OFFSET $2
+SELECT id, name FROM brands LIMIT $1 OFFSET $2
 `
 
 type GetBrandsParams struct {

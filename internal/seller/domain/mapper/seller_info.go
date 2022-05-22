@@ -7,6 +7,10 @@ import (
 
 type SellerInfoMapper struct{}
 
+func NewSellerInfoMapper() *SellerInfoMapper {
+	return &SellerInfoMapper{}
+}
+
 func (s *SellerInfoMapper) FromDTOToEntity(dto sqlc.SellerInfo) model.SellerInfo {
 	return model.SellerInfo{
 		ID:   dto.ID,

@@ -7,6 +7,10 @@ import (
 
 type UserMapper struct{}
 
+func NewUserMapper() *UserMapper {
+	return &UserMapper{}
+}
+
 func (u *UserMapper) FromDTOToEntity(userDto sqlc.User) model.User {
 	return model.User{
 		ID:       userDto.ID,

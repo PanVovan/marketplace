@@ -2,6 +2,9 @@ package seller
 
 import (
 	"database/sql"
+	"makretplace/internal/seller/application"
+	"makretplace/internal/seller/infrastructure/database"
+	"makretplace/internal/seller/infrastructure/service"
 	"makretplace/internal/seller/presentation"
 	"net/http"
 
@@ -15,7 +18,11 @@ func (m *Module) Configure(db *sql.DB, router *mux.Router) error {
 
 	sellerRoute := router.PathPrefix("/seller").Subrouter()
 
-	controller := presentation.NewSellerController()
+	repository := database.NewSellerRepositoryPostgres(db)
+	userService := service.NewSellerService()
+	signupUseCase := application.NewSignUpUseCase(repository, userService)
+	loginUseCase := application.NewLoginUseCase(repository, userService)
+	controller := presentation.NewSellerController(signupUseCase, loginUseCase)
 
 	sellerRoute.HandleFunc("/check", controller.Check).Methods(http.MethodGet)
 

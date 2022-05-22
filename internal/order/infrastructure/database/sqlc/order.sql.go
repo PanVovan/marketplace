@@ -54,7 +54,7 @@ func (q *Queries) DeleteOrder(ctx context.Context, id uuid.UUID) error {
 }
 
 const getOrderByID = `-- name: GetOrderByID :one
-SELECT id, name, email, address, amount, status, phone, comment, user_id FROM "orders" AS "order" WHERE id = $1
+SELECT id, name, email, address, amount, status, phone, comment, user_id FROM orders  WHERE id = $1
 `
 
 func (q *Queries) GetOrderByID(ctx context.Context, id uuid.UUID) (Order, error) {
@@ -75,7 +75,7 @@ func (q *Queries) GetOrderByID(ctx context.Context, id uuid.UUID) (Order, error)
 }
 
 const getOrders = `-- name: GetOrders :many
-SELECT id, name, email, address, amount, status, phone, comment, user_id FROM "orders" AS "order" LIMIT $1 OFFSET $2
+SELECT id, name, email, address, amount, status, phone, comment, user_id FROM orders  LIMIT $1 OFFSET $2
 `
 
 type GetOrdersParams struct {
@@ -117,7 +117,7 @@ func (q *Queries) GetOrders(ctx context.Context, arg GetOrdersParams) ([]Order, 
 }
 
 const getOrdersByEmail = `-- name: GetOrdersByEmail :many
-SELECT id, name, email, address, amount, status, phone, comment, user_id FROM "orders" AS "order" WHERE email = $1 LIMIT $2 OFFSET $3
+SELECT id, name, email, address, amount, status, phone, comment, user_id FROM orders  WHERE email = $1 LIMIT $2 OFFSET $3
 `
 
 type GetOrdersByEmailParams struct {
@@ -160,7 +160,7 @@ func (q *Queries) GetOrdersByEmail(ctx context.Context, arg GetOrdersByEmailPara
 }
 
 const getOrdersByPhone = `-- name: GetOrdersByPhone :many
-SELECT id, name, email, address, amount, status, phone, comment, user_id FROM "orders" AS "order" WHERE phone = $1 LIMIT $2 OFFSET $3
+SELECT id, name, email, address, amount, status, phone, comment, user_id FROM orders  WHERE phone = $1 LIMIT $2 OFFSET $3
 `
 
 type GetOrdersByPhoneParams struct {
@@ -203,7 +203,7 @@ func (q *Queries) GetOrdersByPhone(ctx context.Context, arg GetOrdersByPhonePara
 }
 
 const getOrdersByStatus = `-- name: GetOrdersByStatus :many
-SELECT id, name, email, address, amount, status, phone, comment, user_id FROM "orders" AS "order" WHERE status = $1 LIMIT $2 OFFSET $3
+SELECT id, name, email, address, amount, status, phone, comment, user_id FROM orders  WHERE status = $1 LIMIT $2 OFFSET $3
 `
 
 type GetOrdersByStatusParams struct {
@@ -246,7 +246,7 @@ func (q *Queries) GetOrdersByStatus(ctx context.Context, arg GetOrdersByStatusPa
 }
 
 const getOrdersByUserID = `-- name: GetOrdersByUserID :many
-SELECT id, name, email, address, amount, status, phone, comment, user_id FROM "orders" AS "order" WHERE user_id = $1 LIMIT $2 OFFSET $3
+SELECT id, name, email, address, amount, status, phone, comment, user_id FROM orders  WHERE user_id = $1 LIMIT $2 OFFSET $3
 `
 
 type GetOrdersByUserIDParams struct {

@@ -12,11 +12,17 @@ import (
 )
 
 const createRating = `-- name: CreateRating :exec
-INSERT INTO rating(id, user_id, product_id, rate) VALUES (uuid_generate_v4(), '63c7948d-24da-4331-9769-ab890505f1bd', '0e1ac0c1-97f9-411e-9657-fabfee9bf65e', 5) RETURNING id
+INSERT INTO rating(id, user_id, product_id, rate) VALUES (uuid_generate_v4(), $1, $2, $3) RETURNING id
 `
 
-func (q *Queries) CreateRating(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, createRating)
+type CreateRatingParams struct {
+	UserID    uuid.UUID `db:"user_id"`
+	ProductID uuid.UUID `db:"product_id"`
+	Rate      int32     `db:"rate"`
+}
+
+func (q *Queries) CreateRating(ctx context.Context, arg CreateRatingParams) error {
+	_, err := q.db.ExecContext(ctx, createRating, arg.UserID, arg.ProductID, arg.Rate)
 	return err
 }
 

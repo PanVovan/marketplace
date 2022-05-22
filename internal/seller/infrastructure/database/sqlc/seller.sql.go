@@ -30,7 +30,7 @@ func (q *Queries) CreateSeller(ctx context.Context, arg CreateSellerParams) (uui
 }
 
 const deleteSeller = `-- name: DeleteSeller :exec
-DELETE FROM sellers WHERE "sellers"."id" = $1
+DELETE FROM sellers WHERE sellers.id = $1
 `
 
 func (q *Queries) DeleteSeller(ctx context.Context, id uuid.UUID) error {
@@ -39,7 +39,7 @@ func (q *Queries) DeleteSeller(ctx context.Context, id uuid.UUID) error {
 }
 
 const getSellerByEmail = `-- name: GetSellerByEmail :one
-SELECT id, name, email, password FROM "sellers" as "seller" WHERE "seller"."email" = $1
+SELECT id, name, email, password FROM sellers as seller WHERE seller.email = $1
 `
 
 func (q *Queries) GetSellerByEmail(ctx context.Context, email string) (Seller, error) {
@@ -55,7 +55,7 @@ func (q *Queries) GetSellerByEmail(ctx context.Context, email string) (Seller, e
 }
 
 const getSellerByID = `-- name: GetSellerByID :one
-SELECT id, name, email, password FROM "sellers" as "seller" WHERE "seller"."id" = $1
+SELECT id, name, email, password FROM sellers as seller WHERE seller.id = $1
 `
 
 func (q *Queries) GetSellerByID(ctx context.Context, id uuid.UUID) (Seller, error) {
@@ -71,7 +71,7 @@ func (q *Queries) GetSellerByID(ctx context.Context, id uuid.UUID) (Seller, erro
 }
 
 const getSellers = `-- name: GetSellers :many
-SELECT id, name, email, password FROM "sellers" as "seller" LIMIT $1 OFFSET $2
+SELECT id, name, email, password FROM sellers as seller LIMIT $1 OFFSET $2
 `
 
 type GetSellersParams struct {
