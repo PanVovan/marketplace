@@ -26,8 +26,8 @@ func (m *Module) Configure(db *sql.DB, router *mux.Router) error {
 	return nil
 }
 
-// 	user.GET("/getall", userController.GetAll)
-// 	user.GET("/getone/:id", userController.GetOne)
-// 	user.POST("/create", userController.Create)
-// 	user.PUT("/update/:id", userController.Update)
-// 	user.DELETE("/delete/:id", userController.Delete)
+// 	GET "/getall", userController.GetAll
+// 	GET "/getone/:id", userController.GetOne
+// 	POST "/create", userController.Create
+// 	PUT "/update/:id", userController.Update
+// 	DELETE "/delete/:id", userController.Delete
