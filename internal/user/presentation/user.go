@@ -2,9 +2,9 @@ package presentation
 
 import (
 	"encoding/json"
-	"fmt"
 	"makretplace/internal/user/application"
 	"makretplace/internal/user/domain/model"
+	error_response "makretplace/pkg/error"
 	"net/http"
 )
 
@@ -27,7 +27,12 @@ func (uc *UserController) Login(w http.ResponseWriter, r *http.Request) {
 	var user application.LoginUserParams
 	json.NewDecoder(r.Body).Decode(&user)
 
-	token, _ := uc.login.Execute(r.Context(), user)
+	token, err := uc.login.Execute(r.Context(), user)
+
+	if err != nil {
+		error_response.NewErrorResponse(w, http.StatusInternalServerError, err.Error())
+		return
+	}
 
 	resp := map[string]interface{}{
 		"token": token,
@@ -60,7 +65,7 @@ func (uc *UserController) SignUp(w http.ResponseWriter, r *http.Request) {
 	token, id, err := uc.signup.Execute(r.Context(), userParams)
 
 	if err != nil {
-		fmt.Println(err)
+		error_response.NewErrorResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 

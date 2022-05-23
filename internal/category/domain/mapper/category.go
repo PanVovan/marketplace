@@ -7,6 +7,10 @@ import (
 
 type CategoryMapper struct{}
 
+func NewCategoryMapper() *CategoryMapper {
+	return &CategoryMapper{}
+}
+
 func (c *CategoryMapper) FromDTOToEntity(dto sqlc.Category) model.Category {
 	return model.Category{
 		ID:   dto.ID,

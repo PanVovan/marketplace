@@ -23,7 +23,7 @@ func (q *Queries) CreateCategory(ctx context.Context, name string) (uuid.UUID, e
 }
 
 const deleteCategory = `-- name: DeleteCategory :exec
-DELETE FROM categories WHERE "categories"."id" = $1
+DELETE FROM categories WHERE categories.id = $1
 `
 
 func (q *Queries) DeleteCategory(ctx context.Context, id uuid.UUID) error {
@@ -32,11 +32,16 @@ func (q *Queries) DeleteCategory(ctx context.Context, id uuid.UUID) error {
 }
 
 const getCategories = `-- name: GetCategories :many
-SELECT id, name FROM "categories" as "category"
+SELECT id, name FROM categories LIMIT $1 OFFSET $2
 `
 
-func (q *Queries) GetCategories(ctx context.Context) ([]Category, error) {
-	rows, err := q.db.QueryContext(ctx, getCategories)
+type GetCategoriesParams struct {
+	Limit  int32 `db:"limit"`
+	Offset int32 `db:"offset"`
+}
+
+func (q *Queries) GetCategories(ctx context.Context, arg GetCategoriesParams) ([]Category, error) {
+	rows, err := q.db.QueryContext(ctx, getCategories, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
@@ -56,4 +61,15 @@ func (q *Queries) GetCategories(ctx context.Context) ([]Category, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+const getCategoryById = `-- name: GetCategoryById :one
+SELECT id, name FROM categories WHERE id = $1
+`
+
+func (q *Queries) GetCategoryById(ctx context.Context, id uuid.UUID) (Category, error) {
+	row := q.db.QueryRowContext(ctx, getCategoryById, id)
+	var i Category
+	err := row.Scan(&i.ID, &i.Name)
+	return i, err
 }

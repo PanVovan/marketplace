@@ -21,11 +21,11 @@ func NewCategoryDao(db *sql.DB) *CategoryDao {
 
 }
 
-func (b *CategoryDao) UpdateCategory(ctx context.Context, name string, brandID uuid.UUID) error {
+func (b *CategoryDao) UpdateCategory(ctx context.Context, categoryId uuid.UUID, name string) error {
 	query := `UPDATE categories SET name = $1  WHERE id = $2`
 
 	args := make([]interface{}, 0)
-	args = append(args, name, brandID)
+	args = append(args, name, categoryId)
 
 	_, err := b.db.ExecContext(ctx, query, args...)
 	return err

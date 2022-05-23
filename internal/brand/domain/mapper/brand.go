@@ -7,6 +7,10 @@ import (
 
 type BrandMapper struct{}
 
+func NewBrandMapper() *BrandMapper {
+	return &BrandMapper{}
+}
+
 func (b *BrandMapper) FromDTOToEntity(dto sqlc.Brand) model.Brand {
 	return model.Brand{
 		ID:   dto.ID,

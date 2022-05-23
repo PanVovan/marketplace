@@ -2,6 +2,8 @@ package brand
 
 import (
 	"database/sql"
+	"makretplace/internal/brand/application"
+	"makretplace/internal/brand/infrastructure/database"
 	"makretplace/internal/brand/presentation"
 	"net/http"
 
@@ -14,7 +16,21 @@ type Module struct {
 func (m *Module) Configure(db *sql.DB, router *mux.Router) error {
 	brandRoute := router.PathPrefix("/brand").Subrouter()
 
-	controller := presentation.NewBrandController()
+	repository := database.NewBrandRepositoryPostgres(db)
+
+	getall := application.NewGetAllUseCase(repository)
+	create := application.NewCreateUseCase(repository)
+	getone := application.NewGetOneUseCase(repository)
+	update := application.NewUpdateUseCase(repository)
+	delete := application.NewDeleteUseCase(repository)
+
+	controller := presentation.NewBrandController(
+		getall,
+		create,
+		getone,
+		update,
+		delete,
+	)
 
 	brandRoute.HandleFunc("/getall", controller.GetAll).Methods(http.MethodGet)
 

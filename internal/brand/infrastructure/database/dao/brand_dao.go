@@ -20,7 +20,7 @@ func NewBrandDao(db *sql.DB) *BrandDao {
 	}
 }
 
-func (b *BrandDao) UpdateBrand(ctx context.Context, name string, brandID uuid.UUID) error {
+func (b *BrandDao) UpdateBrand(ctx context.Context, brandID uuid.UUID, name string) error {
 	query := `UPDATE brands SET name = $1  WHERE id = $2`
 
 	args := make([]interface{}, 0)
