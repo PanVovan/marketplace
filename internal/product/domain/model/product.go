@@ -9,14 +9,37 @@ import (
 )
 
 type Product struct {
-	ID         uuid.UUID
-	Name       string
-	Price      float64
-	Rating     float64
-	Brand      brand_model.Brand
-	Seller     seller_model.SellerInfo
-	Amount     int32
-	Images     []ProductImage
-	Properties []ProductProperty
-	Categories []categoty_model.Category
+	ID         uuid.UUID                 `json:"id"`
+	Name       string                    `json:"name"`
+	Price      float64                   `json:"price"`
+	Rating     float64                   `json:"rating"`
+	Brand      brand_model.Brand         `json:"brand"`
+	Seller     seller_model.SellerInfo   `json:"seller"`
+	Amount     int32                     `json:"amount"`
+	Images     []ProductImage            `json:"images"`
+	Properties []ProductProperty         `json:"properties"`
+	Categories []categoty_model.Category `json:"categories"`
+}
+
+type CreateProductParams struct {
+	Name       string            `json:"name"`
+	Price      float64           `json:"price"`
+	Rating     float64           `json:"rating"`
+	BrandID    *uuid.UUID        `json:"brand_id"`
+	SellerID   uuid.UUID         `json:"seller_id"`
+	Amount     int32             `json:"amount"`
+	Images     []ProductImage    `json:"images"`
+	Properties []ProductProperty `json:"properties"`
+	Categories []uuid.UUID       `json:"categories"`
+}
+
+type UpdateProductParams struct {
+	Name       *string           `json:"name"`
+	Price      *float64          `json:"price"`
+	Rating     *float64          `json:"rating"`
+	BrandID    *uuid.UUID        `json:"brand_id"`
+	SellerID   *uuid.UUID        `json:"seller_id"`
+	Amount     *int32            `json:"amount"`
+	Properties []ProductProperty `json:"properties"`
+	Categories []uuid.UUID       `json:"categories"`
 }

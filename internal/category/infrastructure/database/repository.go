@@ -33,7 +33,7 @@ func (cr *CategoryRepositoryPostgres) GetAll(ctx context.Context, limit, page in
 	if err != nil {
 		return nil, err
 	}
-	var entities []model.Category
+	entities := make([]model.Category, 0)
 	for _, dto := range dtos {
 		entities = append(entities, cr.categoryMapper.FromDTOToEntity(dto))
 	}
@@ -60,5 +60,6 @@ func (cr *CategoryRepositoryPostgres) Update(ctx context.Context, categoryID uui
 }
 
 func (cr *CategoryRepositoryPostgres) Delete(ctx context.Context, categoryID uuid.UUID) error {
+	cr.categoryDao.DeleteProductCategoryByCategoryID(ctx, categoryID)
 	return cr.categoryDao.DeleteCategory(ctx, categoryID)
 }

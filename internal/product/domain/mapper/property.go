@@ -5,9 +5,13 @@ import (
 	"makretplace/internal/product/infrastructure/database/sqlc"
 )
 
-type productPropertyMapper struct{}
+type ProductPropertyMapper struct{}
 
-func (p *productPropertyMapper) FromDTOToEntity(dto sqlc.ProductProperty) model.ProductProperty {
+func NewProductPropertyMapper() *ProductPropertyMapper {
+	return &ProductPropertyMapper{}
+}
+
+func (p *ProductPropertyMapper) FromDTOToEntity(dto sqlc.ProductProperty) model.ProductProperty {
 	return model.ProductProperty{
 		ID:    dto.ID,
 		Name:  dto.Name,
@@ -15,7 +19,7 @@ func (p *productPropertyMapper) FromDTOToEntity(dto sqlc.ProductProperty) model.
 	}
 }
 
-func (p *productPropertyMapper) FromEntityToDTO(model model.ProductProperty) sqlc.ProductProperty {
+func (p *ProductPropertyMapper) FromEntityToDTO(model model.ProductProperty) sqlc.ProductProperty {
 	return sqlc.ProductProperty{
 		ID:    model.ID,
 		Name:  model.Name,

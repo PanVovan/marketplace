@@ -39,6 +39,24 @@ func (q *Queries) DeleteProductCategory(ctx context.Context, arg DeleteProductCa
 	return err
 }
 
+const deleteProductCategoryByCategoryID = `-- name: DeleteProductCategoryByCategoryID :exec
+DELETE FROM products_categories WHERE categories_id = $1
+`
+
+func (q *Queries) DeleteProductCategoryByCategoryID(ctx context.Context, categoriesID uuid.UUID) error {
+	_, err := q.db.ExecContext(ctx, deleteProductCategoryByCategoryID, categoriesID)
+	return err
+}
+
+const deleteProductCategoryByProductID = `-- name: DeleteProductCategoryByProductID :exec
+DELETE FROM products_categories WHERE products_id = $1
+`
+
+func (q *Queries) DeleteProductCategoryByProductID(ctx context.Context, productsID uuid.UUID) error {
+	_, err := q.db.ExecContext(ctx, deleteProductCategoryByProductID, productsID)
+	return err
+}
+
 const getProductsCategories = `-- name: GetProductsCategories :many
 SELECT products_id, categories_id FROM products_categories AS products_categories LIMIT $1 OFFSET $2
 `

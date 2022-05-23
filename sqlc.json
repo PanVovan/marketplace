@@ -70,7 +70,7 @@
             "path": "./internal/category/infrastructure/database/sqlc",
             "engine": "postgresql",
             "queries": [
-                "sql/query/category.sql"              
+                "sql/query/category.sql"             
              ],
             "schema": [
                 "sql/schema/category.sql"

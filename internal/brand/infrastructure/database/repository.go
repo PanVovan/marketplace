@@ -33,7 +33,7 @@ func (br *BrandRepositoryPostgres) GetAll(ctx context.Context, limit, page int32
 	if err != nil {
 		return nil, err
 	}
-	var entities []model.Brand
+	entities := make([]model.Brand, 0)
 	for _, dto := range dtos {
 		entities = append(entities, br.brandMapper.FromDTOToEntity(dto))
 	}

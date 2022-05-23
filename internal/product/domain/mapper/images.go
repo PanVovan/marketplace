@@ -7,6 +7,10 @@ import (
 
 type ProductImageMapper struct{}
 
+func NewProductImageMapper() *ProductImageMapper {
+	return &ProductImageMapper{}
+}
+
 func (p *ProductImageMapper) FromDTOToEntity(dto sqlc.ProductImage) model.ProductImage {
 	return model.ProductImage{
 		ID:   dto.ID,

@@ -17,7 +17,7 @@ import (
 type ProductMapper struct {
 	brandMapper      *brand_mapper.BrandMapper
 	categoryMapper   *category_mapper.CategoryMapper
-	propertyMapper   *productPropertyMapper
+	propertyMapper   *ProductPropertyMapper
 	imageMapper      *ProductImageMapper
 	sellerInfoMapper *seller_mapper.SellerInfoMapper
 }
@@ -25,7 +25,7 @@ type ProductMapper struct {
 func NewProductMapper(
 	brandMapper *brand_mapper.BrandMapper,
 	categoryMapper *category_mapper.CategoryMapper,
-	propertyMapper *productPropertyMapper,
+	propertyMapper *ProductPropertyMapper,
 	imageMapper *ProductImageMapper,
 	sellerInfoMapper *seller_mapper.SellerInfoMapper,
 ) *ProductMapper {

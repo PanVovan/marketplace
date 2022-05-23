@@ -10,5 +10,12 @@ SELECT products_id, categories_id FROM products_categories AS products_categorie
 -- name: GetProductsCategoriesByProductID :many
 SELECT products_id, categories_id FROM products_categories AS products_categories WHERE products_id = $1 LIMIT $2 OFFSET $3;
 
+
+-- name: DeleteProductCategoryByProductID :exec
+DELETE FROM products_categories WHERE products_id = $1;
+
+-- name: DeleteProductCategoryByCategoryID :exec
+DELETE FROM products_categories WHERE categories_id = $1;
+
 -- name: DeleteProductCategory :exec
 DELETE FROM products_categories WHERE products_id = $1 AND categories_id = $2;

@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	category_dto "makretplace/internal/category/infrastructure/database/sqlc"
 	"makretplace/internal/product/infrastructure/database/sqlc"
 	"strings"
 
@@ -23,12 +24,12 @@ func NewProductDao(db *sql.DB) *ProductDao {
 }
 
 type UpdateProductParams struct {
-	Name     *string         `db:"name"`
-	Price    *string         `db:"price"`
-	Rating   *sql.NullString `db:"rating"`
-	BrandID  *uuid.NullUUID  `db:"brand_id"`
-	SellerID *uuid.UUID      `db:"seller_id"`
-	Amount   *int32          `db:"amount"`
+	Name     *string    `db:"name"`
+	Price    *float64   `db:"price"`
+	Rating   *float64   `db:"rating"`
+	BrandID  *uuid.UUID `db:"brand_id"`
+	SellerID *uuid.UUID `db:"seller_id"`
+	Amount   *int32     `db:"amount"`
 }
 
 func (p *ProductDao) UpdateProduct(ctx context.Context, arg UpdateProductParams, productID uuid.UUID) error {
@@ -88,7 +89,7 @@ type UpdateProductPropertyParams struct {
 	Value *string `db:"value"`
 }
 
-func (p *ProductDao) UpdateProductProperty(ctx context.Context, arg UpdateProductPropertyParams, productpropertyID uuid.UUID) error {
+func (p *ProductDao) UpdateProductProperty(ctx context.Context, productpropertyID uuid.UUID, arg UpdateProductPropertyParams) error {
 	setValues := make([]string, 0)
 	args := make([]interface{}, 0)
 	argId := 1
@@ -225,4 +226,31 @@ func (p *ProductDao) GetProducts(ctx context.Context, arg GetProductsParams, spe
 	}
 	return items, nil
 
+}
+
+const getCategoriesByProductID = `-- name: GetCategoriesByProductID :many
+SELECT id, name FROM categories INNER JOIN products_categories ON categories.id = products_categories.categories_id WHERE products_categories.products_id = $1
+`
+
+func (q *ProductDao) GetCategoriesByProductID(ctx context.Context, productsID uuid.UUID) ([]*category_dto.Category, error) {
+	rows, err := q.db.QueryContext(ctx, getCategoriesByProductID, productsID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []*category_dto.Category
+	for rows.Next() {
+		var i *category_dto.Category
+		if err := rows.Scan(&i.ID, &i.Name); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
