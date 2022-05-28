@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 23 17:03:38 2022
+# Make data base, printed on Sat May 28 10:33:39 2022
 
 # Variables
 
@@ -109,7 +109,7 @@ HOSTTYPE = x86_64
 # automatic
 +F = $(notdir $+)
 # environment
-WSL_INTEROP = /run/WSL/27305_interop
+WSL_INTEROP = /run/WSL/169_interop
 # 'override' directive
 GNUMAKEFLAGS := 
 # makefile (from 'Makefile', line 1)
@@ -133,7 +133,7 @@ _ = /root/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/node
 # environment
 XDG_RUNTIME_DIR = /mnt/wslg/runtime-dir
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-0159d14f-fdf4-4611-9ba7-03081b7b1e96.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-cccf41b9-987b-42e4-8fcf-248231016e59.sock
 # environment
 GOMODCACHE = /root/go/pkg/mod
 # environment
@@ -248,6 +248,6 @@ docker_pull_postgres:
 # strcache performance: lookups = 43 / hit rate = 27%
 # hash-table stats:
 # Load=31/8192=0%, Rehash=0, Collisions=0/43=0%
-# Finished Make data base on Mon May 23 17:03:38 2022
+# Finished Make data base on Sat May 28 10:33:39 2022
 
  

@@ -17,10 +17,10 @@ type ProductImageRepositoryPostgres struct {
 	mapper *mapper.ProductImageMapper
 }
 
-func NewProductImageRepositoryPostgres(db *sql.DB, dao *dao.ProductDao) *ProductImageRepositoryPostgres {
+func NewProductImageRepositoryPostgres(db *sql.DB) *ProductImageRepositoryPostgres {
 	return &ProductImageRepositoryPostgres{
 		db:     db,
-		dao:    dao,
+		dao:    dao.NewProductDao(db),
 		mapper: mapper.NewProductImageMapper(),
 	}
 }

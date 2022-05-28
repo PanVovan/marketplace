@@ -14,6 +14,9 @@ run:
 
 build_and_run: build run
 
+migrate:
+	migrate -path ./schema -database 'postgres://postgres:qwerty@localhost:5436/postgres?sslmode=disable' up
+
 clean:
 	go clean
 	rm ${BINARY_NAME}

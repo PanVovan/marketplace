@@ -16,7 +16,7 @@ type Module struct {
 
 func (m *Module) Configure(db *sql.DB, router *mux.Router) error {
 
-	userRoute := router.PathPrefix("/users").Subrouter()
+	userRoute := router.PathPrefix("/user").Subrouter()
 
 	repository := database.NewUserRepositoryPostgres(db)
 	userService := service.NewUserService()

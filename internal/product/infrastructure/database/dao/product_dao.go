@@ -139,32 +139,35 @@ type GetProductsQuerySpecs struct {
 }
 
 func (p *ProductDao) GetProducts(ctx context.Context, arg GetProductsParams, specs GetProductsQuerySpecs) ([]sqlc.Product, error) {
-	values := make([]string, 0)
+	var values []string = nil
 	args := make([]interface{}, 0)
 	argId := 1
 
 	join := ""
-	var where string
+	where := ""
 
 	if specs.BrandID != nil {
+
 		values = append(values, fmt.Sprintf("brand_id = $%d", argId))
 		args = append(args, *specs.BrandID)
 		argId++
+
 	}
 
 	if specs.SellerID != nil {
+
 		values = append(values, fmt.Sprintf("seller_id = $%d", argId))
 		args = append(args, *specs.SellerID)
 		argId++
+
 	}
 
 	if specs.CategoriesID != nil {
 		join = `
 		INNER JOIN products_categories ON products.id = products_categories.products_id
-		INNER JOIN categories ON categories.id = products_categories.categories_id
-		`
+		INNER JOIN categories ON categories.id = products_categories.categories_id`
 
-		category := make([]string, 0)
+		var category []string = nil
 
 		for _, categoryID := range specs.CategoriesID {
 			category = append(category, fmt.Sprintf("categories.id = $%d", argId))
@@ -172,7 +175,10 @@ func (p *ProductDao) GetProducts(ctx context.Context, arg GetProductsParams, spe
 			argId++
 		}
 
-		values = append(values, strings.Join(category, " OR "))
+		if category != nil {
+			values = append(values, strings.Join(category, " OR "))
+		}
+
 	}
 
 	if len(values) != 0 {
@@ -232,15 +238,15 @@ const getCategoriesByProductID = `-- name: GetCategoriesByProductID :many
 SELECT id, name FROM categories INNER JOIN products_categories ON categories.id = products_categories.categories_id WHERE products_categories.products_id = $1
 `
 
-func (q *ProductDao) GetCategoriesByProductID(ctx context.Context, productsID uuid.UUID) ([]*category_dto.Category, error) {
+func (q *ProductDao) GetCategoriesByProductID(ctx context.Context, productsID uuid.UUID) ([]category_dto.Category, error) {
 	rows, err := q.db.QueryContext(ctx, getCategoriesByProductID, productsID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []*category_dto.Category
+	var items []category_dto.Category
 	for rows.Next() {
-		var i *category_dto.Category
+		var i category_dto.Category
 		if err := rows.Scan(&i.ID, &i.Name); err != nil {
 			return nil, err
 		}

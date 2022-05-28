@@ -8,6 +8,7 @@ import (
 	brand_dto "makretplace/internal/brand/infrastructure/database/sqlc"
 	category_mapper "makretplace/internal/category/domain/mapper"
 	category_dao "makretplace/internal/category/infrastructure/database/dao"
+	category_dto "makretplace/internal/category/infrastructure/database/sqlc"
 	"makretplace/internal/product/domain/aggregate"
 	product_mapper "makretplace/internal/product/domain/mapper"
 	"makretplace/internal/product/domain/model"
@@ -23,9 +24,9 @@ import (
 type ProductRepositoryPostgres struct {
 	db                 *sql.DB
 	dao                *dao.ProductDao
-	propertyRepository *product_repo.ProductPropertyRepository
+	propertyRepository product_repo.ProductPropertyRepository
 	sellerDao          *seller_dao.SellerDao
-	imageRepository    *product_repo.ProductImageRepository
+	imageRepository    product_repo.ProductImageRepository
 	brandDao           *brand_dao.BrandDao
 	categoryDao        *category_dao.CategoryDao
 	productMapper      *product_mapper.ProductMapper
@@ -34,8 +35,8 @@ type ProductRepositoryPostgres struct {
 
 func NewProductRepositoryPostgres(
 	db *sql.DB,
-	propertyRepository *product_repo.ProductPropertyRepository,
-	imageRepository *product_repo.ProductImageRepository,
+	propertyRepository product_repo.ProductPropertyRepository,
+	imageRepository product_repo.ProductImageRepository,
 ) *ProductRepositoryPostgres {
 	return &ProductRepositoryPostgres{
 		db:                 db,
@@ -87,7 +88,7 @@ func (pr *ProductRepositoryPostgres) Create(ctx context.Context, product model.C
 	//TODO: Create file uploading
 	if product.Images != nil {
 		for _, image := range product.Images {
-			_, err := (*pr.imageRepository).Create(ctx, productId, image.File)
+			_, err := pr.imageRepository.Create(ctx, productId, image.File)
 			if err != nil {
 				return uuid.Nil, err
 			}
@@ -97,7 +98,7 @@ func (pr *ProductRepositoryPostgres) Create(ctx context.Context, product model.C
 	if product.Properties != nil {
 		for _, property := range product.Properties {
 
-			_, err := (*pr.propertyRepository).Create(ctx, productId, model.CreateProductPropertyParams{
+			_, err := pr.propertyRepository.Create(ctx, productId, model.CreateProductPropertyParams{
 				Name:  property.Name,
 				Value: property.Value,
 			})
@@ -150,6 +151,10 @@ func (pr *ProductRepositoryPostgres) GetOne(ctx context.Context, productID uuid.
 	}
 
 	ctg, err := pr.dao.GetCategoriesByProductID(ctx, productID)
+	var categories []*category_dto.Category
+	for _, ct := range ctg {
+		categories = append(categories, &ct)
+	}
 	if err != nil {
 		return model.Product{}, err
 	}
@@ -172,7 +177,7 @@ func (pr *ProductRepositoryPostgres) GetOne(ctx context.Context, productID uuid.
 		Product:    &prod,
 		Images:     imag_ptr,
 		Brand:      &brand,
-		Categories: ctg,
+		Categories: categories,
 		SellerInfo: &seller,
 		Properties: prop_ptr,
 	}
@@ -202,6 +207,10 @@ func (pr *ProductRepositoryPostgres) GetAll(ctx context.Context, specs product_r
 		if err != nil {
 			return nil, err
 		}
+		var categories []*category_dto.Category
+		for _, ct := range ctg {
+			categories = append(categories, &ct)
+		}
 
 		var brand brand_dto.Brand
 
@@ -220,7 +229,7 @@ func (pr *ProductRepositoryPostgres) GetAll(ctx context.Context, specs product_r
 		product := aggregate.ProductInfo{
 			Product:    &prod,
 			Brand:      &brand,
-			Categories: ctg,
+			Categories: categories,
 			SellerInfo: &seller,
 		}
 
@@ -259,7 +268,7 @@ func (pr *ProductRepositoryPostgres) Update(ctx context.Context, productID uuid.
 	if params.Properties != nil {
 		pr.dao.DeleteProductPropertiesByProductID(ctx, productID)
 		for _, property := range params.Properties {
-			_, err := (*pr.propertyRepository).Create(ctx, productID, model.CreateProductPropertyParams{
+			_, err := pr.propertyRepository.Create(ctx, productID, model.CreateProductPropertyParams{
 				Name:  property.Name,
 				Value: property.Value,
 			})
