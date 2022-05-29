@@ -56,16 +56,17 @@ func (p *ProductMapper) FromDTOToEntity(aggregate aggregate.Product) product_mod
 	}
 
 	return product_model.Product{
-		ID:         aggregate.Product.ID,
-		Name:       aggregate.Product.Name,
-		Price:      aggregate.Product.Price,
-		Rating:     aggregate.Product.Rating,
-		Seller:     p.sellerInfoMapper.FromDTOToEntity(*aggregate.SellerInfo),
-		Amount:     aggregate.Product.Amount,
-		Brand:      p.brandMapper.FromDTOToEntity(*aggregate.Brand),
-		Categories: categories,
-		Properties: properties,
-		Images:     images,
+		ID:          aggregate.Product.ID,
+		Name:        aggregate.Product.Name,
+		Price:       aggregate.Product.Price,
+		Rating:      aggregate.Product.Rating,
+		Description: aggregate.Product.Description,
+		Seller:      p.sellerInfoMapper.FromDTOToEntity(*aggregate.SellerInfo),
+		Amount:      aggregate.Product.Amount,
+		Brand:       p.brandMapper.FromDTOToEntity(*aggregate.Brand),
+		Categories:  categories,
+		Properties:  properties,
+		Images:      images,
 	}
 }
 
@@ -111,12 +112,13 @@ func (p *ProductMapper) FromEntityToDTO(model product_model.Product) aggregate.P
 
 func (p *ProductMapper) fromEntityToProductDTO(model product_model.Product) *product_dto.Product {
 	return &product_dto.Product{
-		ID:       model.ID,
-		Name:     model.Name,
-		Price:    model.Price,
-		Rating:   model.Rating,
-		BrandID:  uuid.NullUUID{UUID: model.Brand.ID},
-		SellerID: model.Seller.ID,
-		Amount:   model.Amount,
+		ID:          model.ID,
+		Name:        model.Name,
+		Price:       model.Price,
+		Rating:      model.Rating,
+		Description: model.Description,
+		BrandID:     uuid.NullUUID{UUID: model.Brand.ID},
+		SellerID:    model.Seller.ID,
+		Amount:      model.Amount,
 	}
 }

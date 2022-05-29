@@ -19,6 +19,7 @@ const (
 type tokenClaims struct {
 	jwt.StandardClaims
 	UserId uuid.UUID `json:"user_id"`
+	Role   string    `json:"role"`
 }
 
 type userService struct {
@@ -36,6 +37,7 @@ func (us *userService) GenerateToken(userId uuid.UUID) (string, error) {
 			IssuedAt:  time.Now().Unix(),
 		},
 		userId,
+		"USER",
 	})
 
 	return token.SignedString([]byte(signingKey))
@@ -55,6 +57,9 @@ func (us *userService) ParseToken(accessToken string) (uuid.UUID, error) {
 	claims, ok := token.Claims.(*tokenClaims)
 	if !ok {
 		return uuid.Nil, errors.New("token claims are not of type *tokenClaims")
+	}
+	if claims.Role != "USER" {
+		return uuid.Nil, errors.New("you are not user")
 	}
 	return claims.UserId, nil
 }

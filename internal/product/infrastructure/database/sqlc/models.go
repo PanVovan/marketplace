@@ -9,13 +9,14 @@ import (
 )
 
 type Product struct {
-	ID       uuid.UUID     `db:"id"`
-	Name     string        `db:"name"`
-	Price    float64       `db:"price"`
-	Rating   float64       `db:"rating"`
-	BrandID  uuid.NullUUID `db:"brand_id"`
-	SellerID uuid.UUID     `db:"seller_id"`
-	Amount   int32         `db:"amount"`
+	ID          uuid.UUID     `db:"id"`
+	Name        string        `db:"name"`
+	Description string        `db:"description"`
+	Price       float64       `db:"price"`
+	Rating      float64       `db:"rating"`
+	BrandID     uuid.NullUUID `db:"brand_id"`
+	SellerID    uuid.UUID     `db:"seller_id"`
+	Amount      int32         `db:"amount"`
 }
 
 type ProductImage struct {

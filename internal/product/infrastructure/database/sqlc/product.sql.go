@@ -12,17 +12,18 @@ import (
 )
 
 const createProduct = `-- name: CreateProduct :one
-INSERT INTO products (id, name, price, rating, brand_id, seller_id, amount)
-VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, $6) RETURNING id
+INSERT INTO products (id, name, price, rating, brand_id, seller_id, amount, description)
+VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, $6, $7) RETURNING id
 `
 
 type CreateProductParams struct {
-	Name     string        `db:"name"`
-	Price    float64       `db:"price"`
-	Rating   float64       `db:"rating"`
-	BrandID  uuid.NullUUID `db:"brand_id"`
-	SellerID uuid.UUID     `db:"seller_id"`
-	Amount   int32         `db:"amount"`
+	Name        string        `db:"name"`
+	Price       float64       `db:"price"`
+	Rating      float64       `db:"rating"`
+	BrandID     uuid.NullUUID `db:"brand_id"`
+	SellerID    uuid.UUID     `db:"seller_id"`
+	Amount      int32         `db:"amount"`
+	Description string        `db:"description"`
 }
 
 func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (uuid.UUID, error) {
@@ -33,6 +34,7 @@ func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (u
 		arg.BrandID,
 		arg.SellerID,
 		arg.Amount,
+		arg.Description,
 	)
 	var id uuid.UUID
 	err := row.Scan(&id)
@@ -52,6 +54,7 @@ const getProductByID = `-- name: GetProductByID :one
 SELECT 
 	id,
 	name,
+	description,
 	price,
 	rating,
 	brand_id,
@@ -67,6 +70,7 @@ func (q *Queries) GetProductByID(ctx context.Context, id uuid.UUID) (Product, er
 	err := row.Scan(
 		&i.ID,
 		&i.Name,
+		&i.Description,
 		&i.Price,
 		&i.Rating,
 		&i.BrandID,

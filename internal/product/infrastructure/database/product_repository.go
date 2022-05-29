@@ -73,12 +73,13 @@ func (pr *ProductRepositoryPostgres) Create(ctx context.Context, product model.C
 	}
 
 	productId, err := pr.dao.CreateProduct(ctx, sqlc.CreateProductParams{
-		Name:     product.Name,
-		Price:    product.Price,
-		Rating:   product.Rating,
-		BrandID:  brandID,
-		SellerID: product.SellerID,
-		Amount:   product.Amount,
+		Name:        product.Name,
+		Price:       product.Price,
+		Rating:      product.Rating,
+		BrandID:     brandID,
+		SellerID:    product.SellerID,
+		Amount:      product.Amount,
+		Description: product.Description,
 	})
 
 	if err != nil {
@@ -241,12 +242,13 @@ func (pr *ProductRepositoryPostgres) GetAll(ctx context.Context, specs product_r
 
 func (pr *ProductRepositoryPostgres) Update(ctx context.Context, productID uuid.UUID, params model.UpdateProductParams) error {
 	err := pr.dao.UpdateProduct(ctx, dao.UpdateProductParams{
-		Name:     params.Name,
-		Price:    params.Price,
-		Rating:   params.Rating,
-		BrandID:  params.BrandID,
-		SellerID: params.SellerID,
-		Amount:   params.Amount,
+		Name:        params.Name,
+		Price:       params.Price,
+		Rating:      params.Rating,
+		BrandID:     params.BrandID,
+		SellerID:    params.SellerID,
+		Amount:      params.Amount,
+		Description: params.Description,
 	}, productID)
 	if err != nil {
 		return err

@@ -12,3 +12,11 @@ type BasketProduct struct {
 	Image    model.ProductImage
 	Quantity int32
 }
+
+type CreateBasketProduct struct {
+	Quantity int32
+}
+
+type UpdateBasketProduct struct {
+	Quantity int32
+}

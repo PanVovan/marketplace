@@ -9,12 +9,13 @@ import (
 )
 
 type ProductInfo struct {
-	ID         uuid.UUID
-	Name       string
-	Price      float64
-	Rating     float64
-	Seller     seller_model.SellerInfo
-	Brand      brand_model.Brand
-	Categories []category_model.Category
-	Amount     int32
+	ID          uuid.UUID
+	Name        string
+	Price       float64
+	Rating      float64
+	Description string
+	Seller      seller_model.SellerInfo
+	Brand       brand_model.Brand
+	Categories  []category_model.Category
+	Amount      int32
 }

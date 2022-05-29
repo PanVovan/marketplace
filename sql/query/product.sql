@@ -1,12 +1,13 @@
 
 -- name: CreateProduct :one
-INSERT INTO products (id, name, price, rating, brand_id, seller_id, amount)
-VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, $6) RETURNING id;
+INSERT INTO products (id, name, price, rating, brand_id, seller_id, amount, description)
+VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, $6, $7) RETURNING id;
 
 -- name: GetProductByID :one
 SELECT 
 	id,
 	name,
+	description,
 	price,
 	rating,
 	brand_id,

@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS public.products
 (
     id uuid NOT NULL,
     name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(255) COLLATE pg_catalog."default" NOT NULL,
     price numeric NOT NULL DEFAULT 0,
     rating numeric DEFAULT NULL::numeric,
     brand_id uuid,

@@ -24,12 +24,13 @@ func NewProductDao(db *sql.DB) *ProductDao {
 }
 
 type UpdateProductParams struct {
-	Name     *string    `db:"name"`
-	Price    *float64   `db:"price"`
-	Rating   *float64   `db:"rating"`
-	BrandID  *uuid.UUID `db:"brand_id"`
-	SellerID *uuid.UUID `db:"seller_id"`
-	Amount   *int32     `db:"amount"`
+	Name        *string    `db:"name"`
+	Price       *float64   `db:"price"`
+	Rating      *float64   `db:"rating"`
+	Description *string    `db:"description"`
+	BrandID     *uuid.UUID `db:"brand_id"`
+	SellerID    *uuid.UUID `db:"seller_id"`
+	Amount      *int32     `db:"amount"`
 }
 
 func (p *ProductDao) UpdateProduct(ctx context.Context, arg UpdateProductParams, productID uuid.UUID) error {
@@ -40,6 +41,12 @@ func (p *ProductDao) UpdateProduct(ctx context.Context, arg UpdateProductParams,
 	if arg.Name != nil {
 		setValues = append(setValues, fmt.Sprintf("name=$%d", argId))
 		args = append(args, *arg.Name)
+		argId++
+	}
+
+	if arg.Description != nil {
+		setValues = append(setValues, fmt.Sprintf("description=$%d", argId))
+		args = append(args, *arg.Description)
 		argId++
 	}
 
@@ -189,6 +196,7 @@ func (p *ProductDao) GetProducts(ctx context.Context, arg GetProductsParams, spe
 	SELECT 
 		products.id,
 		products.name,
+		products.description
 		products.price,
 		products.rating,
 		products.brand_id,
